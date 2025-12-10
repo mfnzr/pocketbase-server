@@ -1,3 +1,52 @@
+## v0.34.2
+
+- Bumped JS SDK to v0.26.5 to fix Safari AbortError detection introduced with the previous release ([#7369](https://github.com/pocketbase/pocketbase/issues/7369)).
+
+
+## v0.34.1
+
+- Added missing `:` char to the autocomplete regex ([#7353](https://github.com/pocketbase/pocketbase/pull/7353); thanks @ouvreboite).
+
+- Added "Copy raw JSON" collection dropdown option ([#7357](https://github.com/pocketbase/pocketbase/issues/7357)).
+
+- Updated Go deps and JS SDK.
+
+- Bumped min Go GitHub action version to 1.25.5 because it comes with some [minor security fixes](https://github.com/golang/go/issues?q=milestone%3AGo1.25.5).
+    _The runner action was also updated to `actions/setup-go@v6` since the previous v5 Go source seems [no longer accessible](https://github.com/actions/setup-go/pull/665#issuecomment-3416693714)._
+
+
+## v0.34.0
+
+- Added `@request.body.someField:changed` modifier.
+    It could be used when you want to ensure that a body field either wasn't submitted or was submitted with the same value.
+    Or in other words, if you want to disallow a field change the below 2 expressions would be equivalent:
+    ```js
+    // (old)
+    (@request.body.someField:isset = false || @request.body.someField = someField)
+
+    // (new)
+    @request.body.someField:changed = false
+    ```
+
+- Added `MailerRecordEvent.Meta["info"]` property for the `OnMailerRecordAuthAlertSend` hook.
+
+- Updated the backup restore popup with a short info about the performed restore steps.
+
+- Updated Go deps.
+
+
+## v0.33.0
+
+- Added extra `id` characters validation in addition to the user specified regex pattern ([#7312](https://github.com/pocketbase/pocketbase/issues/7312)).
+    _The following special characters are always forbidden: `./\|"'``<>:?*%$\n\r\t\0 `. Common reserved Windows file names such as `aux`, `prn`, `con`, `nul`, `com1-9`, `lpt1-9` are also not allowed._
+    _The list is not exhaustive but it should help minimizing eventual filesystem compatibility issues in case of wildcards or other loose regex patterns._
+
+- Added `{ALERT_INFO}` placeholder to the auth alert mail template ([#7314](https://github.com/pocketbase/pocketbase/issues/7314)).
+    _⚠️ `mails.SendRecordAuthAlert(app, authRecord, info)` also now accepts a 3rd `info` string argument._
+
+- Updated Go deps.
+
+
 ## v0.32.0
 
 - ⚠️ Added extra List/Search API rules checks for the client-side `filter`/`sort` relations.
@@ -230,7 +279,7 @@
     If you are having difficulties adjusting your code, feel free to open a [Q&A discussion](https://github.com/pocketbase/pocketbase/discussions) with the failing/problematic code sample.
 
 - Added [new `geoPoint` field](https://pocketbase.io/docs/collections/#geopoint) for storing `{"lon":x,"lat":y}` geographic coordinates.
-    In addition, a new [`geoDistance(lonA, lotA, lonB, lotB)` function](htts://pocketbase.io/docs/api-rules-and-filters/#geodistancelona-lata-lonb-latb) was also implemented that could be used to apply an API rule or filter constraint based on the distance (in km) between 2 geo points.
+    In addition, a new [`geoDistance(lonA, lotA, lonB, lotB)` function](https://pocketbase.io/docs/api-rules-and-filters/#geodistancelona-lata-lonb-latb) was also implemented that could be used to apply an API rule or filter constraint based on the distance (in km) between 2 geo points.
 
 - Updated the `select` field UI to accommodate better larger lists and RTL languages ([#4674](https://github.com/pocketbase/pocketbase/issues/4674)).
 
