@@ -1,18 +1,21 @@
 FROM alpine:latest
 
-# add curl and unzip
+# Instalar dependências necessárias (certificados)
 RUN apk add --no-cache ca-certificates
 
-# create working directory
+# Criar diretório de trabalho
 WORKDIR /app
 
-# copy pocketbase binary and data
+# Copiar o binário e os dados
 COPY pocketbase ./pocketbase
 COPY pb_data ./pb_data
 COPY pb_migrations ./pb_migrations
 
-# expose default pocketbase port
+# Garantir permissão de execução
+RUN chmod +x ./pocketbase
+
+# Expor a porta padrão do PocketBase
 EXPOSE 8090
 
-# run pocketbase
+# Rodar o PocketBase no modo server
 CMD ["./pocketbase", "serve", "--http", "0.0.0.0:8090"]
