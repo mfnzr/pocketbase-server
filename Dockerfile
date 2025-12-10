@@ -8,8 +8,7 @@ WORKDIR /app
 
 # Copiar o binário e os dados
 COPY pocketbase ./pocketbase
-COPY pb_data ./pb_data
-COPY pb_migrations ./pb_migrations
+
 
 # Garantir permissão de execução
 RUN chmod +x ./pocketbase
